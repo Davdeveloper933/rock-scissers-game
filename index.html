@@ -110,7 +110,7 @@
         let human = '';
         let ai = '';
         let winner = '';
-        let score = localStorage.getItem('score')?localStorage.getItem('score'):0;
+        let score = parseInt(localStorage.getItem('score'))?parseInt(localStorage.getItem('score')):0;
         let game = [];
         const board = document.getElementById('board');
         const results = document.getElementById('results');

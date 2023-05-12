@@ -110,19 +110,18 @@
         let human = '';
         let ai = '';
         let winner = '';
-        let score = 0;
+        let score = localStorage.getItem('score')?localStorage.getItem('score'):0;
         let game = [];
         const board = document.getElementById('board');
         const results = document.getElementById('results');
         const scores = document.getElementById('scores');
-        // startGame()
 
         function startGame(event) {
             winner = '';
             humanTurn(event);
             AiTurn();
             checkWinner();
-            updateScore(score)
+            setScore(score);
             createGameResults();
             toggleGameBoard();
             if(!winner) {
@@ -167,7 +166,7 @@
         }
 
         function createGameBoard() {
-            document.querySelector('#scores span').innerHTML = score;
+            setScore(score);
             signals.forEach((item,i)=>{
                 const img = document.createElement('img');
                 img.src = 'img/'+item+'.png'
@@ -198,11 +197,15 @@
             startGame(event)
         }
 
-        function updateScore(score) {
-            localStorage.setItem('score',score);
-            score = localStorage.getItem('score',score);
+        function setScore(score) {
+            localStorage.setItem('score',parseInt(score));
             document.querySelector('#scores span').innerHTML = score;
         }
+
+        // function updateScore(score) {
+        //     score = localStorage.getItem('score');
+        //     document.querySelector('#scores span').innerHTML = score;
+        // }
 
         addEventListener("DOMContentLoaded", createGameBoard);
     </script>

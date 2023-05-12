@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #93B874;
+            padding-top: 30px;
+        }
+        #board {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #results {
+            display: none;
+        }
+
+        .results-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h3 {
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        img {
+            width: 200px;
+            cursor: pointer;
+        }
+
+        .row {
+            position: relative;
+        }
+
+        .sidebar {
+            width: 200px;
+            position: absolute;
+            right: 50px;
+            top: 0;
+        }
+
+        .bg-violet {
+            border-radius: 6px;
+            background-color: #5D3FD3;
+            color: white;
+            padding: 10px;
+        }
+
+        .start {
+            display: flex;
+            justify-content: center;
+        }
+
+        .start a {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #scores {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors game by <i>Govnocoder</i></h1>
+    <div class="row">
+            <div id="board"></div>
+            <div id="results">
+                <div class="results-row">
+                    <div class="card">
+                        <img class="human-img" src="" alt="">
+                        <h3>You</h3>
+                    </div>
+                    <div class="card">
+                        <img src="" alt="" class="ai-img">
+                        <h3>Computer</h3>
+                    </div>
+                </div>
+                <div class="start">
+                    <a href="" onclick="location.reload()">Start new game</a>
+                </div>
+            </div>
+            <div class="sidebar">
+                <h3 class="bg-violet" id="scores">Scores:
+                    <span></span>
+                </h3>
+            </div>
+    </div>
+
+    <script>
+        let signals = ['rock', 'paper', 'scissors'];
+        let human = '';
+        let ai = '';
+        let winner = '';
+        let score = 0;
+        let game = [];
+        const board = document.getElementById('board');
+        const results = document.getElementById('results');
+        const scores = document.getElementById('scores');
+        // startGame()
+
+        function startGame(event) {
+            winner = '';
+            humanTurn(event);
+            AiTurn();
+            checkWinner();
+            updateScore(score)
+            createGameResults();
+            toggleGameBoard();
+            if(!winner) {
+                alert('You tied!');
+            }else {
+                alert(winner)
+            }
+        }
+
+        function checkWinner() {
+            game = [human,ai];
+            let winCombs = [
+                ['rock','scissors'],
+                ['paper','rock'],
+                ['scissors','paper']
+            ]
+
+            console.log(game)
+
+            winCombs.find((comb)=>{
+                let compareArrs = JSON.stringify(game) === JSON.stringify(comb);
+                let compareArrsReversed = JSON.stringify(game.toReversed()) === JSON.stringify(comb);
+                if (compareArrs) {
+                    winner = 'You won!'
+                    score+=1
+                }else if (compareArrsReversed){
+                    winner = 'Computer won!'
+                    score-=1
+                }
+                return winner;
+            })
+        }
+
+        function AiTurn() {
+            let index = Math.floor(Math.random() * signals.length);
+            ai = signals[index]
+        }
+
+
+        function humanTurn(event) {
+            human = signals[event.target.id];
+        }
+
+        function createGameBoard() {
+            document.querySelector('#scores span').innerHTML = score;
+            signals.forEach((item,i)=>{
+                const img = document.createElement('img');
+                img.src = 'img/'+item+'.png'
+                img.setAttribute('id',i)
+                img.addEventListener('click', startGame)
+                board.append(img)
+            })
+        }
+
+        function createGameResults() {
+            const humanImg = document.querySelector('.human-img');
+            const aiImg = document.querySelector('.ai-img');
+            humanImg.src = 'img/'+game[0]+'.png';
+            aiImg.src = 'img/'+game[1]+'.png'
+        }
+
+        function toggleGameBoard() {
+            if (board.style.display !== 'none') {
+                results.style.display = 'block'
+                board.style.display = 'none'
+            }else {
+                board.style.display = 'flex'
+                results.style.display = 'none'
+            }
+        }
+
+        function setClickHandleres(event) {
+            startGame(event)
+        }
+
+        function updateScore(score) {
+            localStorage.setItem('score',score);
+            score = localStorage.getItem('score',score);
+            document.querySelector('#scores span').innerHTML = score;
+        }
+
+        addEventListener("DOMContentLoaded", createGameBoard);
+    </script>
+</body>
+</html>

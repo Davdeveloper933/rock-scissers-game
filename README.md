@@ -1,3 +1,3 @@
-# rock-scissers-game
+# Rock-scissers-paper game
 ## Made by Govnocoder (its me)
 ## pure Javascript & HTML

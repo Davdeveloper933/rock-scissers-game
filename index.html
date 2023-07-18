@@ -19,6 +19,14 @@
 	<body>
 		<h1>Rock Paper Scissors game by <i>Govnocoder</i></h1>
 		<div class="row">
+			<div class="animation">
+				<div class="animation-img-wrapper">
+					<img
+						src="./img/count-down.gif"
+						alt=""
+					/>
+				</div>
+			</div>
 			<div id="board"></div>
 			<div id="results">
 				<div class="results-row">
@@ -70,15 +78,27 @@
 			const board = document.getElementById("board");
 			const results = document.getElementById("results");
 			const scores = document.getElementById("scores");
+			const animation = document.querySelector(".animation");
 
 			function startGame(event) {
 				winner = "";
 				humanTurn(event);
-				AiTurn();
-				checkWinner();
-				setScore(score);
-				createGameResults();
-				toggleGameBoard();
+				setAnimation();
+				setTimeout(function () {
+					clearAnimation();
+				}, 4100);
+				setTimeout(function () {
+					clearAnimation();
+					AiTurn();
+					checkWinner();
+					setScore(score);
+					createGameResults();
+					toggleGameBoard();
+					getResult();
+				}, 4500);
+			}
+
+			function getResult() {
 				if (!winner) {
 					alert("You tied!");
 				} else {
@@ -155,6 +175,16 @@
 			function setScore(score) {
 				localStorage.setItem("score", parseInt(score));
 				document.querySelector("#scores span").innerHTML = score;
+			}
+
+			function clearAnimation() {
+				animation.style.display = "none";
+				board.style.display = "flex";
+			}
+
+			function setAnimation() {
+				animation.style.display = "block";
+				board.style.display = "none";
 			}
 
 			addEventListener("DOMContentLoaded", createGameBoard);

@@ -75,7 +75,7 @@ img {
 }
 
 .animation {
-	display: none;
+	display: block;
 }
 
 .animation-img-wrapper img {

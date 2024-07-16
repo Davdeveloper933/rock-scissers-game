@@ -3,4 +3,4 @@
 ## pure Javascript & HTML
 
 ## TRY IT HERE
-# https://davdeveloper933.github.io/rock-scissers-game/
+### https://davdeveloper933.github.io/rock-scissers-game/

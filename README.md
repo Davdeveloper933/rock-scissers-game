@@ -1,5 +1,5 @@
 # Rock-scissers-paper game
-## Made by Govnocoder (its me)
+## Made by me
 ## pure Javascript & HTML
 
 ## TRY IT HERE

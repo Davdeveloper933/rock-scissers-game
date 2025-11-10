@@ -26,6 +26,11 @@ h1 {
 	margin-bottom: 50px;
 }
 
+h1 a {
+	color: white;
+	text-decoration:none;
+}
+
 h3 {
 	color: white;
 	text-align: center;
